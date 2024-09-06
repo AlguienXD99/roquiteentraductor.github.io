@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Traductor Español - Roquiteen</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+        }
+        textarea {
+            width: 80%;
+            height: 100px;
+            margin: 10px 0;
+            padding: 10px;
+            font-size: 16px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .result {
+            margin-top: 20px;
+        }
+        .pronunciation {
+            font-style: italic;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+    <h1>Traductor de Español a Roquiteen</h1>
+    <h2>Dato: en realidad solo se usa un solo signo de exclamación (!) y uno solo para interrogación (?) en el idioma roquiteén.</h1>
+    <textarea id="inputText" placeholder="Introduce el texto en español aquí..."></textarea><br>
+    <button onclick="traducir()">Traducir</button><br>
+    <div class="result">
+        <textarea id="outputText" readonly placeholder="Aquí aparecerá el texto en roquiteen..."></textarea><br>
+        <div id="pronunciation" class="pronunciation"></div>
+    </div>
+
+    <script>
+        function traducir() {
+            const inputText = document.getElementById('inputText').value.toLowerCase();
+            const outputText = document.getElementById('outputText');
+            const pronunciationDiv = document.getElementById('pronunciation');
+
+            // Función para eliminar tildes y normalizar el texto
+            function normalize(texto) {
+                return texto.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+            }
+
+            // Diccionario con frases y palabras
+            const diccionario = {
+                "hola a todos": { roquiteen: "benjaui ti tudeau's", pronunciacion: "ben-jau-i ti teu-deus" },
+                "noventa y nueve": { roquiteen: "neuffdix n' neuffen", pronunciacion: "neuf-dix n' neuf-en" },
+                "hola": { roquiteen: "benjaui", pronunciacion: "benyau-i" },
+                "conejo": { roquiteen: "coneço", pronunciacion: "coneço" },
+                "para": { roquiteen: "parais", pronunciacion: "pa-rais" },
+                "parado": { roquiteen: "parais'do", pronunciacion: "pa-rais-do" },
+                "futuro": { roquiteen: "fut'il", pronunciacion: "fut-il" },
+                "el": { roquiteen: "le", pronunciacion: "le" },
+                "él": { roquiteen: "li", pronunciacion: "li" },
+                "en": { roquiteen: "in", pronunciacion: "in" },
+                "está": { roquiteen: "esd", pronunciacion: "esd" },
+                "esta": { roquiteen: "esd-presend-in", pronunciacion: "esd-pres'nd-in" } // Añadido al diccionario
+                // Añade más palabras y frases aquí
+            };
+
+            // Normalizar texto de entrada
+            let traduccion = normalize(inputText);
+
+            // Reemplazar frases completas en el texto
+            Object.keys(diccionario).sort((a, b) => b.length - a.length).forEach(frase => {
+                let regex = new RegExp("\\b" + frase + "\\b", "g");
+                traduccion = traduccion.replace(regex, diccionario[frase].roquiteen);
+            });
+
+            // Crear la pronunciación
+            let pronunciacion = inputText;
+            Object.keys(diccionario).forEach(frase => {
+                let regex = new RegExp("\\b" + frase + "\\b", "g");
+                pronunciacion = pronunciacion.replace(regex, diccionario[frase].pronunciacion);
+            });
+
+            // Mostrar la traducción y pronunciación
+            outputText.value = traduccion;
+            pronunciationDiv.textContent = pronunciacion;
+        }
+    </script>
+</body>
+</html>
