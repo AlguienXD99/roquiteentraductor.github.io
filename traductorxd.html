@@ -68,18 +68,19 @@
                 "pueblo": { roquiteen: "pouble", pronunciacion: "pouble" },
                 "señora": { roquiteen: "madaime", pronunciacion: "madaime" },
                 "señor": { roquiteen: "monsua", pronunciacion: "monsua" },
-                "niño": { roquiteen: "creiça", pronunciacion: "creicja" },
+                "niño": { roquiteen: "creiça", pronunciacion: "creiça" },
                 "niña": { roquiteen: "creiz'da", pronunciacion: "creiz'da" },
                 "comer": { roquiteen: "boucop", pronunciacion: "boucop" },
                 "gusta": { roquiteen: "gust", pronunciacion: "gust" },
-                "a": { roquiteen: "ti", pronunciacion: "ti" },
                 "el": { roquiteen: "le", pronunciacion: "le" },
                 "él": { roquiteen: "li", pronunciacion: "li" },
                 "en": { roquiteen: "in", pronunciacion: "in" },
-                "pasado": { roquiteen: "past'il", pronunciacion: "past'il" },
-                "presente": { roquiteen: "presnt", pronunciacion: "presnt" }, // Corrigió la falta de cierre de comillas
                 "está": { roquiteen: "esd", pronunciacion: "esd" },
-                "esta": { roquiteen: "esd-presend-in", pronunciacion: "esd-pres'nd-in" }
+                "esta": { roquiteen: "esd-presend-in", pronunciacion: "esd-pres'nd-in" },
+                "a": { roquiteen: "ti", pronunciacion: "ti" },
+                "y": { roquiteen: "ent", pronunciacion: "ent" }, // Conjunción
+                "o": { roquiteen: "ou", pronunciacion: "ou" }, // Conjunción disyuntiva
+                "pero": { roquiteen: "mas", pronunciacion: "mas" }, // Conjunción adversativa
                 // Añade más palabras y frases aquí
             };
 
@@ -99,7 +100,20 @@
                 pronunciacion = pronunciacion.replace(regex, diccionario[frase].pronunciacion);
             });
 
-            // Mostrar la traducción y pronunciación
+            // Para evitar la mezcla de palabras, se asegura que solo las palabras completas sean reemplazadas
+            const evitarReemplazo = ['a', 'y', 'o', 'pero'];
+            let palabras = traduccion.split(' ').map(palabra => {
+                if (!evitarReemplazo.includes(palabra)) {
+                    Object.keys(diccionario).forEach(key => {
+                        if (key === palabra) {
+                            palabra = diccionario[key].roquiteen; // Reemplaza la palabra si no está en la lista de evitar
+                        }
+                    });
+                }
+                return palabra;
+            });
+
+            traduccion = palabras.join(' '); // Reconstruye el texto
             outputText.value = traduccion;
             pronunciationDiv.textContent = pronunciacion;
         }
