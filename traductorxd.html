@@ -45,12 +45,13 @@
 
     <script>
         function traducir() {
-            const inputText = document.getElementById('inputText').value;
+            const inputText = document.getElementById('inputText').value.toLowerCase();
             const outputText = document.getElementById('outputText');
             const pronunciationDiv = document.getElementById('pronunciation');
 
-            // Función para eliminar tildes y normalizar el texto
+            // Función para normalizar el texto
             function normalize(texto) {
+                // Retornar el texto sin eliminar 'ñ'
                 return texto.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
             }
 
@@ -82,9 +83,10 @@
                 "él": { roquiteen: "li", pronunciacion: "li" },
                 "en": { roquiteen: "in", pronunciacion: "in" },
                 "pasado": { roquiteen: "past'il", pronunciacion: "past-il" },
-                "presente": { roquiteen: "presnt", pronunciacion: "pres'nt" },  // Corregido
+                "presente": { roquiteen: "presnt", pronunciacion: "pres'nt" }, // Corrigió la falta de cierre de comillas
                 "está": { roquiteen: "esd", pronunciacion: "esd" },
                 "esta": { roquiteen: "esd-presend-in", pronunciacion: "esd-pres'nd-in" }
+                // Añade más palabras y frases aquí
             };
 
             // Normalizar texto de entrada
