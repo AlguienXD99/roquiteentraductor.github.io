@@ -35,7 +35,7 @@
 </head>
 <body>
     <h1>Traductor de Español a Roquiteen</h1>
-    <h2>Dato: en realidad solo se usa un solo signo de exclamación (!) y uno solo para interrogación (?) en el idioma roquiteén.</h1>
+    <h2>Dato: en realidad solo se usa un solo signo de exclamación (!) y uno solo para interrogación (?) en el idioma roquiteén.</h2>
     <textarea id="inputText" placeholder="Introduce el texto en español aquí..."></textarea><br>
     <button onclick="traducir()">Traducir</button><br>
     <div class="result">
@@ -45,7 +45,7 @@
 
     <script>
         function traducir() {
-            const inputText = document.getElementById('inputText').value.toLowerCase();
+            const inputText = document.getElementById('inputText').value;
             const outputText = document.getElementById('outputText');
             const pronunciationDiv = document.getElementById('pronunciation');
 
@@ -82,10 +82,9 @@
                 "él": { roquiteen: "li", pronunciacion: "li" },
                 "en": { roquiteen: "in", pronunciacion: "in" },
                 "pasado": { roquiteen: "past'il", pronunciacion: "past-il" },
-                "presente": { roquiteen: "presnt", pronunciacion: "pres'nt },
+                "presente": { roquiteen: "presnt", pronunciacion: "pres'nt" },  // Corregido
                 "está": { roquiteen: "esd", pronunciacion: "esd" },
-                "esta": { roquiteen: "esd-presend-in", pronunciacion: "esd-pres'nd-in" } // Añadido al diccionario
-                // Añade más palabras y frases aquí
+                "esta": { roquiteen: "esd-presend-in", pronunciacion: "esd-pres'nd-in" }
             };
 
             // Normalizar texto de entrada
